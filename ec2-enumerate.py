@@ -1,7 +1,9 @@
 # Enumerates ec2 instances in a region.
 import boto3
+import sys
 import os
 import json
+import argparse
 from prettytable import PrettyTable
 
 # I had to take time to format the output because it was bothering me plus I want other folks to be able to read it. :)
@@ -25,6 +27,15 @@ def header_star(header_text):
 def header_line(header_text):
     print_header(header_text, '-')
 
+def launch():
+    parser = argparse.ArgumentParser()
+    if len(sys.argv) == 0:
+        print "Must specify --display and/or --write"
+        return False
+    else:    
+        parser.add_argument("--display", action='store_true', help="Displays your ec2 instances per region to screen.")
+        parser.add_argument("--write", action='store_true', help="Writes your ec2 instances per region to a json file (ec2.json)")
+        return parser.parse_args()
 
 def init_ec2(region):
     return boto3.resource('ec2', region_name=region)
@@ -101,6 +112,9 @@ def write_to_json():
 
 
 if __name__ == "__main__":
-    write_to_json()
-    exit()
-    display_all_instances()
+    app = launch()
+    if app:
+        if app.display:
+            display_all_instances()
+        if app.write:
+            write_to_json()
