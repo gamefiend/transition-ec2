@@ -1,6 +1,8 @@
 ec2/
-.python-version
-.swp
-.pyc
+*.python-version
+*.swp
+*.swo
+*.pyc
 # We output some of the data to json, so we don't want to be porting that over into public repos.
-.json
+*.json
+*.txt
