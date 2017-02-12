@@ -5,8 +5,6 @@ import os
 import argparse
 from datetime import datetime
 
-new_acct = '786878542656'
-old_acct = '126843840730' 
 def record_complete(region, resource, resource_type):
     fname = "{}-{}.txt".format(region, resource_type)
     with open (fname, 'a+') as f:
